@@ -6,12 +6,14 @@ import CartDrawer from './components/CartDrawer';
 import Footer from './components/Footer';
 import SplashScreen from './components/SplashScreen';
 import InquiryForm from './components/InquiryForm';
+import AdminPanel from './components/AdminPanel';
+import PulseOrbit from './components/PulseOrbit';
 import { PRODUCTS } from './types';
 import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
 
 function Dashboard() {
-  const { activeCategory, searchQuery, setActiveCategory, setSearchQuery } = useStore();
+  const { activeCategory, searchQuery, setActiveCategory, setSearchQuery, isAdminOpen } = useStore();
 
   const filteredProducts = PRODUCTS.filter(product => {
     const matchesCategory = activeCategory === 'All' 
@@ -30,13 +32,15 @@ function Dashboard() {
   });
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-black">
+      <PulseOrbit />
       <Navbar />
       <Hero />
+      <AdminPanel />
       
-      <main>
+      <main className="relative z-10">
         {/* Featured Section */}
-        <section id="shop" className="py-32 px-6 md:px-12 bg-brand-bg">
+        <section id="shop" className="py-32 px-6 md:px-12 bg-transparent">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
               <div>
@@ -118,7 +122,7 @@ function Dashboard() {
         </section>
 
         {/* Philosophy Section */}
-        <section id="ethos" className="py-40 px-6 md:px-12 bg-brand-surface relative overflow-hidden">
+        <section id="ethos" className="py-40 px-6 md:px-12 bg-transparent relative overflow-hidden">
           <div className="max-w-4xl mx-auto text-center relative z-10">
             <motion.div
                initial={{ opacity: 0, scale: 0.9 }}

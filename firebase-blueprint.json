@@ -1,0 +1,46 @@
+{
+  "entities": {
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "Customer inquiry for textile products",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customer": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "company": { "type": "string" },
+            "email": { "type": "string", "format": "email" },
+            "position": { "type": "string" },
+            "market": { "type": "string" },
+            "requirements": { "type": "string" }
+          },
+          "required": ["name", "company", "email"]
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "name": { "type": "string" },
+              "quantity": { "type": "number" },
+              "category": { "type": "string" },
+              "image": { "type": "string" }
+            }
+          }
+        },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["pending", "reviewed", "resolved"] }
+      },
+      "required": ["id", "customer", "items", "timestamp", "status"]
+    }
+  },
+  "firestore": {
+    "/inquiries/{inquiryId}": {
+      "schema": "Inquiry",
+      "description": "Collection of B2B product inquiries"
+    }
+  }
+}

@@ -3,19 +3,19 @@ import { ChevronRight } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden bg-brand-ink">
+    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden bg-transparent">
       <motion.div 
         initial={{ scale: 1.1, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.6 }}
+        animate={{ scale: 1, opacity: 0.3 }}
         transition={{ duration: 2, ease: "easeOut" }}
         className="absolute inset-0 z-0"
       >
         <img 
           src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000" 
           alt="Hero Background" 
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover grayscale"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-brand-ink via-transparent to-transparent opacity-80" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
       </motion.div>
 
       <div className="relative z-10 text-center px-6 max-w-5xl">

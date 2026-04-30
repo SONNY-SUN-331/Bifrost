@@ -4,18 +4,30 @@ import { X, CheckCircle2, ChevronRight, Loader2 } from 'lucide-react';
 import { useStore } from '../StoreContext';
 
 export default function InquiryForm() {
-  const { cart, isInquiryMode, setIsInquiryMode, setSubmitSuccess, submitSuccess } = useStore();
+  const { cart, isInquiryMode, setIsInquiryMode, setSubmitSuccess, submitSuccess, submitInquiry, inquiries } = useStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    position: '',
+    market: 'North America',
+    requirements: ''
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
+    
+    // Simulate slight delay for professional feel
     setTimeout(() => {
+      submitInquiry(formData);
       setIsSubmitting(false);
       setSubmitSuccess(true);
-    }, 2000);
+    }, 1500);
   };
+
+  const lastInquiryId = inquiries[0]?.id || '...';
 
   if (!isInquiryMode) return null;
 
@@ -77,27 +89,54 @@ export default function InquiryForm() {
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-[9px] uppercase tracking-widest text-white/40">Full Name</label>
-                    <input required type="text" className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors" />
+                    <input 
+                      required 
+                      type="text" 
+                      value={formData.name}
+                      onChange={e => setFormData(f => ({ ...f, name: e.target.value }))}
+                      className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors" 
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[9px] uppercase tracking-widest text-white/40">Company</label>
-                    <input required type="text" className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors" />
+                    <input 
+                      required 
+                      type="text" 
+                      value={formData.company}
+                      onChange={e => setFormData(f => ({ ...f, company: e.target.value }))}
+                      className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors" 
+                    />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-[9px] uppercase tracking-widest text-white/40">Email Address</label>
-                  <input required type="email" className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors" />
+                  <input 
+                    required 
+                    type="email" 
+                    value={formData.email}
+                    onChange={e => setFormData(f => ({ ...f, email: e.target.value }))}
+                    className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors" 
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-[9px] uppercase tracking-widest text-white/40">Position</label>
-                    <input type="text" className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors" />
+                    <input 
+                      type="text" 
+                      value={formData.position}
+                      onChange={e => setFormData(f => ({ ...f, position: e.target.value }))}
+                      className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors" 
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[9px] uppercase tracking-widest text-white/40">Target Market</label>
-                    <select className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors appearance-none">
+                    <select 
+                      className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors appearance-none"
+                      value={formData.market}
+                      onChange={e => setFormData(f => ({ ...f, market: e.target.value }))}
+                    >
                       <option>North America</option>
                       <option>Europe</option>
                       <option>Asia Pacific</option>
@@ -108,7 +147,12 @@ export default function InquiryForm() {
 
                 <div className="space-y-2">
                   <label className="text-[9px] uppercase tracking-widest text-white/40">Additional Requirements</label>
-                  <textarea className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors h-32 resize-none" placeholder="Volume requirements, lead times, or specific certifications..."></textarea>
+                  <textarea 
+                    className="w-full bg-brand-surface/50 border border-white/10 p-4 text-xs text-white outline-none focus:border-brand-gold transition-colors h-32 resize-none" 
+                    placeholder="Volume requirements, lead times, or specific certifications..."
+                    value={formData.requirements}
+                    onChange={e => setFormData(f => ({ ...f, requirements: e.target.value }))}
+                  ></textarea>
                 </div>
 
                 <button 
@@ -130,7 +174,7 @@ export default function InquiryForm() {
               </div>
               <h2 className="font-serif text-5xl md:text-7xl font-light">Inquiry Sent</h2>
               <p className="text-white/40 text-sm max-w-md mx-auto leading-relaxed">
-                Thank you for your interest in the Bifrost archive. Reference ID: {Math.random().toString(36).substring(7).toUpperCase()}. We will respond shortly.
+                Thank you for your interest in the Bifrost archive. Reference ID: {lastInquiryId}. We will respond shortly.
               </p>
               <div className="pt-8">
                 <button 

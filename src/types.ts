@@ -12,6 +12,21 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
+export interface Inquiry {
+  id: string;
+  customer: {
+    name: string;
+    company: string;
+    email: string;
+    position: string;
+    market: string;
+    requirements: string;
+  };
+  items: CartItem[];
+  timestamp: string;
+  status: 'pending' | 'reviewed' | 'resolved';
+}
+
 export const PRODUCTS: Product[] = [
   // --- Blanket & Cushion ---
   {
